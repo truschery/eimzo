@@ -1,0 +1,31 @@
+{
+  "name": "@truschery/eimzo",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/client.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truschery/eimzo.git"
+  },
+  "keywords": [
+    "eimzo"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "truschery",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/truschery/eimzo/issues"
+  },
+  "homepage": "https://github.com/truschery/eimzo#readme",
+  "description": "",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.44.1"
+  }
+}
