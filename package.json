@@ -1,0 +1,40 @@
+{
+  "name": "@truschery/eimzo",
+  "version": "1.0.0",
+  "description": "A lightweight Node.js package for seamless integration with Eimzo, providing easy-to-use functionality for creating digital signatures and managing API keys.",
+  "author": "truschery <truschery.work@gmail.com>",
+  "type": "module",
+  "main": "./dist/client.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truschery/eimzo.git"
+  },
+  "keywords": [
+    "eimzo",
+    "digital-signature",
+    "electronic-signature",
+    "api-keys",
+    "node.js",
+    "javascript",
+    "security"
+  ],
+  "files": [
+    "./dist"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/truschery/eimzo/issues"
+  },
+  "homepage": "https://github.com/truschery/eimzo#readme",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.44.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
