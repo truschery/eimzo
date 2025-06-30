@@ -16,22 +16,22 @@ export default class EService extends EClient{
         this.certificates = await super.getPfxCertificates()
     }
 
-    async sign(serialNumber, data, timestamper){
-        try {
-            const certificate = this.certificates.find(key => key.serialNumber === serialNumber)
+    sign(serialNumber, data, timestamper){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const certificate = this.certificates.find(key => key.serialNumber === serialNumber)
 
-            if(!certificate) return false
+                if(!certificate) return false
 
-            const loadedKey = await super.loadPfxKey(certificate)
+                const loadedKey = await super.loadPfxKey(certificate)
 
-            const pkcs7 = await super.createPkcs7(loadedKey.keyId, data, timestamper).catch(e => console.log(e))
+                const pkcs7 = await super.createPkcs7(loadedKey.keyId, data, timestamper).catch(e => reject(e))
 
-            if(!pkcs7) return false
-
-            return pkcs7.pkcs7_64
-        }catch (e){
-            return e
-        }
+                resolve(pkcs7.pkcs7_64)
+            }catch (e){
+                reject(e)
+            }
+        })
     }
 
 
