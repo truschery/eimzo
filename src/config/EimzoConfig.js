@@ -1,6 +1,8 @@
 import { isEmpty } from "../helpers/Validators";
 import ApiKey from "./ApiKey";
 
+
+
 export default class EimzoConfig 
 {
 
@@ -14,8 +16,5 @@ export default class EimzoConfig
         return new self;
     }
 
-    static apiKeys()
-    {
-        return [...apiKeys]
-    } 
+
 }
