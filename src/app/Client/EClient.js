@@ -5,15 +5,12 @@ import { Cryptography } from "../Cryptography/index.js";
 import ECertificate from "./ECertificate.js";
 
 
-export default class EClient extends EApi{
+export default class EClient {
 
     constructor(API_KEYS) {
-        super()
-
         if(!API_KEYS || !API_KEYS.length) return false
 
         this.NEW_API = false
-        this.NEW_API2 = false
         this.API_KEYS = API_KEYS
         this.cryptography = new Cryptography()
 
@@ -31,7 +28,6 @@ export default class EClient extends EApi{
 
                 const installedVersion = parseInt(data.major) * 100 + parseInt(data.minor)
                 this.NEW_API = installedVersion >= 336
-                this.NEW_API2 = installedVersion >= 412
 
                 return resolve({
                     major: data.major,

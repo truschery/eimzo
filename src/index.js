@@ -1,8 +1,9 @@
 import { EClient, EService } from './app/index.js'
-
+import {ApiKey} from './config'
 
 export {
-    EClient
+    EClient,
+    ApiKey
 }
 
 export default EService
