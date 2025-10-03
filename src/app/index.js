@@ -1,8 +1,8 @@
-import {EClient} from "./Client/index.js"
-import EService from "./Services/EService.js";
+import Eimzo from "./Eimzo"
 
+import Plugin from "./plugins/Plugin";
 
 export {
-    EClient,
-    EService,
+    Eimzo,
+    Plugin,
 }

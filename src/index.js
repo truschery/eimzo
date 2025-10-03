@@ -1,9 +1,9 @@
-import { EClient, EService } from './app/index.js'
-import {ApiKey} from './config'
+import { 
+    Eimzo,
+    Plugin, 
+} from './app/index'
 
 export {
-    EClient,
-    ApiKey
+    Eimzo,
+    Plugin,
 }
-
-export default EService

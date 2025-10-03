@@ -11,7 +11,7 @@ export default {
                     compress: {
                         drop_console: false,
                         drop_debugger: true,
-                        pure_funcs: ['console.log'],
+                        // pure_funcs: ['console.log'],
                         passes: 2
                     },
                     mangle: {
