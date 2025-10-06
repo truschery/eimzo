@@ -1,34 +1,23 @@
-import ApiKeys from "../config/ApiKeys"
-import eimzoApi from "./core/api/EimzoApi"
+import ApiKeys from '../config/ApiKeys'
+import EimzoCertificates from './modules/Certificates/EimzoCertificates'
 
 export default class Eimzo 
 {
-    minEimzoVersion = 450
-    client = eimzoApi
-
+    
     constructor(
         apiKeys
     )
     {
         new ApiKeys(apiKeys)
-        
-        eimzoApi.checkVersion()
-        .then(() => eimzoApi.installApiKeys())
-        
     }
 
-    
-
-    async getPfxList()
+    create(apiKeys)
     {
-        const value = await eimzoApi.send({plugin: "pfx", name: "list_all_certificates"})
 
-        console.log(value);
-        
-
-        return []
     }
 
-    
-
+    certificates()
+    {
+        return new EimzoCertificates()
+    }
 }

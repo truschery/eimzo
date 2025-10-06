@@ -36,5 +36,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@truschery/eimzo-api": "^1.0.7"
+  },
+  "peerDependencies": {
+    "@truschery/eimzo-api": "^1.0.7"
   }
 }

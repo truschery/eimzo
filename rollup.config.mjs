@@ -25,5 +25,8 @@ export default {
             ]
         }
     ],
+    external: [
+        '@truschery/eimzo-api'
+    ]
 
 };
