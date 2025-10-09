@@ -3,7 +3,6 @@ import EimzoCertificates from './modules/Certificates/EimzoCertificates'
 
 export default class Eimzo 
 {
-    
     constructor(
         apiKeys
     )

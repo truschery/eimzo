@@ -13,7 +13,7 @@ class EimzoClient extends Client
             await super.connect()
             super.connected = true
             await this.checkVersion()
-            await this.checkVersion(ApiKeys.all())
+            await this.installApiKeys(ApiKeys.all())
         }
         
         return super.send(data)
