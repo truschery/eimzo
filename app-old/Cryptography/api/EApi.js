@@ -1,4 +1,4 @@
-import Response from "../../../helpers/Response.js";
+import Response from "../../../src/helpers/Response.js";
 
 
 export default class EApi {

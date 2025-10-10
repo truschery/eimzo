@@ -10,11 +10,6 @@ export default class Eimzo
         new ApiKeys(apiKeys)
     }
 
-    create(apiKeys)
-    {
-
-    }
-
     certificates()
     {
         return new EimzoCertificates()

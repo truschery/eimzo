@@ -1,7 +1,8 @@
 import terser from "@rollup/plugin-terser";
+import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/index.js',
+    input: 'index.js',
     output: [
         {
             file: 'dist/client.min.js',
@@ -24,6 +25,11 @@ export default {
                 })
             ]
         }
+    ],
+    plugins: [
+        typescript({
+            tsconfig: './tsconfig.json'
+        })
     ],
     external: [
         '@truschery/eimzo-api'
