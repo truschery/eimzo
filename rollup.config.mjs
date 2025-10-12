@@ -2,7 +2,7 @@ import terser from "@rollup/plugin-terser";
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'index.js',
+    input: 'src/index.ts',
     output: [
         {
             file: 'dist/client.min.js',
@@ -11,7 +11,7 @@ export default {
                 terser({
                     compress: {
                         drop_console: false,
-                        drop_debugger: true,
+                        drop_debugger: false,
                         // pure_funcs: ['console.log'],
                         passes: 2
                     },

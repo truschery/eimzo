@@ -1,34 +1,31 @@
 
-export default class EimzoAlias
+export default class Alias
 {
+    providedAlias: string
+    alias: Map<string, string> = new Map()
 
-    providedAlias
-    alias = {}
-    
-    constructor(alias)
+    constructor(alias: string)
     {
-        if(typeof alias !== 'string'){
-            throw new Error('[EimzoAlias] Invalid Alias String')
-        }   
         alias = alias.toUpperCase()
         alias = alias.replace("1.2.860.3.16.1.1=", "INN=")   // Замена на ИНН
         alias = alias.replace("1.2.860.3.16.1.2=", "PINFL=")
         this.providedAlias = alias.toUpperCase()
-        this.#parse(this.providedAlias)
+        this.parse(this.providedAlias)
     }
 
-    #parse(providedAlias)
+    private parse(providedAlias: string)
     {
         const splitted = providedAlias.split(',')
-        
+
         splitted.forEach(alias => {
             const [field, value] = alias.split('=')
-            this.alias[field.toLowerCase()] = value
+            this.alias.set(field.toLowerCase(), value)
         });
     }
 
-    get(field)
+    get(field: string, defaultValue?: string): undefined | string
     {
-        return this.alias[field]
+        if(!this.alias.has(field)) return defaultValue
+        return this.alias.get(field)
     }
 }

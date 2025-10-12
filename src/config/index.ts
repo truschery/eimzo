@@ -1,7 +1,8 @@
-import defaultConfig from "./default.js";
 import Config from "./Config.js";
+import eimzoConfig from "./default";
+
+
 
 export {
-    Config,
-    defaultConfig,
+    eimzoConfig,
 }

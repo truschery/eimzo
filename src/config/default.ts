@@ -1,7 +1,20 @@
-import { IConfig } from "./interface";
+import Config from "./Config";
 
-const defaultConfig: IConfig = {
-    timestamp: null
-}
+const eimzoConfig = new Config({
+    default: {
+        'timestamp': null
+    }
+})
 
-export default defaultConfig;
+export default eimzoConfig
+
+// eimzoConfig.merge({
+//     'timestamp': 'your-site.com'
+// })
+
+// eimzoConfig.get('timestamp')
+// eimzoConfig.equal('timestamp', '123')
+
+
+
+

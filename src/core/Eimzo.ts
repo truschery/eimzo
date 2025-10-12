@@ -1,15 +1,18 @@
 
-import ApiKeys from './ApiKeys/ApiKeys.js'
-import type { IEimzo } from './interface.js'
-import PfxModule from './modules/pfx/index.js'
+import ApiKeys from './ApiKeys.js'
+import type { IEimzo } from '../types'
+import EimzoClient from './EimzoClient.js'
+import {isEmpty, isEmptyArray} from "../helpers/predicates";
+import { PfxCertificate } from "./Certificate";
+import {Pfx} from "@truschery/eimzo-api";
 
 export default class Eimzo implements IEimzo
 {
-    pfx: unknown = null
+    certificates: PfxCertificate[] = []
 
-    constructor(config: any)
+    constructor()
     {
-        this.#registerModules()   
+
     }
 
     addApiKey(domain: string, key: string)
@@ -17,8 +20,27 @@ export default class Eimzo implements IEimzo
         ApiKeys.addKey(domain, key)
     }
 
-    #registerModules()
+    async loadPfxCertificates()
     {
-        this.pfx = new PfxModule()
+        // @ts-ignore
+        const result = await EimzoClient.pfx.listAllCertificates()
+        this.certificates = this.parseCertificate(result?.certificates)
+
+        return this.certificates
     }
+
+    private parseCertificate(certificates: Pfx.Certificate[])
+    {
+        if(
+            isEmpty(certificates) ||
+            isEmptyArray(certificates)
+        ){
+            throw new Error('[Eimzo Certificates] Certificates Is Empty')
+        }
+
+        return certificates.map(certificate => {
+            return new PfxCertificate(certificate)
+        })
+    }
+
 }
