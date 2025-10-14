@@ -1,23 +1,39 @@
 # Eimzo
 
-A lightweight Node.js package for seamless integration with Eimzo, providing easy-to-use functionality for creating digital signatures and managing API keys.
+<div align="center">
+  <h1>Eimzo</h1>
+  <a href="https://www.npmjs.org/package/@truschery/eimzo"><img src="https://img.shields.io/npm/v/@truschery/eimzo?style=flat-square" /></a>
+  <a href="https://packagephobia.com/result?p=@truschery/eimzo"><img src="https://packagephobia.com/badge?p=@truschery/eimzo" /></a>
+  <a href="https://bundlephobia.com/package/@truschery/eimzo@latest"><img src="https://img.shields.io/bundlephobia/minzip/@truschery/eimzo?style=flat-square" /></a>
+  <a href="https://npm-stat.com/charts.html?package=@truschery/eimzo"><img src="https://img.shields.io/npm/dm/@truschery/eimzo?style=flat-square" /></a>
+  <br />
+  <br />
+  <a href="#features">Features</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#installation">Installation</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#documentation">Docs</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#example">Example</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="#license">License</a>
+  <br />
+  <hr />
+</div>
 
-Легковесный пакет для Node.js, обеспечивающий простую интеграцию с Eimzo для создания электронных подписей и управления API-ключами.
+A simple package for integration with the Eimzo API, providing the best experience for interacting with certificates, Pkcs7, and other plugins. [Eimzo](https://e-imzo.soliq.uz)
 
-Eimzo bilan soddalashtirilgan integratsiya uchun yengil Node.js paketi, raqamli imzolarni yaratish va API kalitlarini boshqarish imkoniyatini beradi.
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [API Reference](#api-reference)
-- [Contributing](#contributing)
-- [License](#license)
-- [Support](#support)
 
 ## Features
-- The ability to use the pkcs7 plugin
-- The ability to use the pfx plugin
+The package has the ability to:
+- Sending and processing API requests to Eimzo
+- Connecting Eimzo API keys and checking the Eimzo application version
+- Interaction with certificates implemented
+- Throwing exceptions for convenient error handling 
+
+Plans:
+- Implement a simple package configuration  
+- Add functionality for interacting with other Eimzo plugins
 
 ## Installation
 Install the package via npm:
@@ -26,50 +42,42 @@ Install the package via npm:
 npm install @truschery/eimzo
 ```
 
+## Documentation
+To view the complete documentation for the package, you can visit [Docs](docs/index.md)
+
 Ensure you have Node.js version 14 or higher installed.
 
-## Usage
+## Example
 To use `@truschery/eimzo`, import the package and initialize it with your Eimzo API credentials.
 
 ```javascript
-import EService from '@truschery/eimzo'
+import Eimzo from '@truschery/eimzo'
 
 // Initialize with API key
-const eimzoService = new EService([
-  'localhost',
-  'api-key',
-])
+const eimzo = new Eimzo({
+  // ...configuration...
+})
 
-// You need to install API keys
-await eimzoService.install()
+// You need to add API keys
+eimzo.addApiKey('your-site', 'api-key')
 
-// Create a digital signature
+// Get a list of certificates
+const certificates = await eimzo.loadPfxCertificates()
 
-await eimzoService.sign('key id', 'string to signature')
+// Interaction with the certificate
+const certificate = certificates[0]
+
+// Signing a string with a certificate
+certificate.sign('string to sign', {
+ // options
+ detached: boolean  
+}): string
+
+// Is the certificate expired?
+certificate.isExpired(): bool
+// Does this certificate belong to an individual?
+certificate.isPhysical(): bool
 ```
-
-## API Reference
-- `EService(apiKeys)`: Initialize the Eimzo service with configuration.
-  - `apiKeys`: Your Eimzo API key (required).
-- `sign(keyId, data)`: Creates a digital signature for the provided data.
-  - Returns: `Promise<string>` - The generated signature.
-- `install()`: Install API keys.
-  - Returns: `Promise<void>`.
-
-For detailed documentation, see [API Documentation](./docs/api.md).
-
-## Contributing
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m 'Add your feature'`).
-4. Push to the branch (`git push origin feature/your-feature`).
-5. Open a Pull Request.
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
-## Support
-If you encounter any issues or have questions, please file an issue on the [GitHub Issues page](https://github.com/truschery/eimzo/issues).
