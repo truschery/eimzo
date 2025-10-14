@@ -20,9 +20,8 @@ export default class Eimzo implements IEimzo
         ApiKeys.addKey(domain, key)
     }
 
-    async loadPfxCertificates()
+    async loadPfxCertificates(): Promise<PfxCertificate[]>
     {
-        // @ts-ignore
         const result = await EimzoClient.pfx.listAllCertificates()
         this.certificates = this.parseCertificate(result?.certificates)
 

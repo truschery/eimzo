@@ -2,7 +2,7 @@ import terser from "@rollup/plugin-terser";
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/index.ts',
+    input: 'lib/index.ts',
     output: [
         {
             file: 'dist/client.min.js',

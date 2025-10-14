@@ -1,10 +1,10 @@
-import { Eimzo } from "@truschery/eimzo-api"
+import EimzoInstance from "@truschery/eimzo-api"
+import type { BaseEimzoApiResponse } from '@truschery/eimzo-api'
 import ApiKeys from "./ApiKeys";
-import {BaseEimzoApiResponse} from "@truschery/eimzo-api/dist/types";
 import EimzoError from "./EimzoError";
 import {EimzoErrorCodes} from "../types/eimzo";
 
-class EimzoClient extends Eimzo
+class EimzoClient extends EimzoInstance
 {
     constructor() {
         super()
@@ -12,7 +12,7 @@ class EimzoClient extends Eimzo
 
     readonly minEimzoVersion: number = 450
 
-    async send<T extends BaseEimzoApiResponse>(data: any): Promise<T>
+    async send<T extends BaseEimzoApiResponse>(data: object): Promise<T>
     {
         if(!this.isConnected)
         {

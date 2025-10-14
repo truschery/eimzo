@@ -1,7 +1,8 @@
 
 import {
     isEmpty,
-    isNullOrUndefined
+    isNullOrUndefined,
+    isDate
 } from "./common";
 
 import {
@@ -15,11 +16,21 @@ import {
     isNotEmptyObjectProperties,
 } from './object'
 
+import {
+    isBase64,
+    isString
+} from './string'
+
 
 export {
     // Common
     isEmpty,
+    isDate,
     isNullOrUndefined,
+
+    // String
+    isBase64,
+    isString,
 
     // Array
     isEmptyArray,

@@ -1,11 +1,10 @@
 import {Certificate, DateOrUndefined, StringOrUndefined} from "../../types";
-import {isEmptyObjectProperties} from "../../helpers/predicates";
+import {isEmpty, isEmptyObjectProperties} from "../../helpers/predicates";
 import Alias from "./Alias";
 import EimzoClient from "../EimzoClient";
 import { Pfx } from "@truschery/eimzo-api";
-import isBase64 from "../../helpers/predicates/string";
-import Cryptography from "../../helpers/Cryptography";
-import {Pkcs7} from "@truschery/eimzo-api/dist/types";
+import { isBase64, isString, isDate } from "../../helpers/predicates";
+import {Pkcs7} from "@truschery/eimzo-api";
 import EimzoError from "../EimzoError";
 import {EimzoErrorCodes} from "../../types/eimzo";
 
@@ -68,7 +67,14 @@ export default class PfxCertificate implements Certificate.Instance {
         params: any
     ): Promise<string>
     {
-        const base64 = isBase64(string) ? string : Cryptography.encode(string)
+        if(
+            isEmpty(string) ||
+            ! isString(string)
+        ){
+            throw new EimzoError('Invalid String Value Is Empty Or Not String', EimzoErrorCodes.SIGN_STRING_IS_EMPTY)
+        }
+
+        const base64 = isBase64(string) ? string : btoa(string)
         const loadedKey = await this.loadKey()
         const isDetached = params?.detached ? 'yes' : 'no'
 
@@ -101,6 +107,25 @@ export default class PfxCertificate implements Certificate.Instance {
 
             throw new EimzoError('Undefined Error creating Pkcs7', EimzoErrorCodes.UNDEFINED_ERROR)
         })
+    }
+
+    isExpired(): boolean
+    {
+        if(
+            ! isDate(this.validFrom) || 
+            ! isDate(this.validTo)
+        ){
+            return false
+        }
+
+        const difference: number = this.validTo.getTime() - new Date().getTime()
+
+        return difference <= 0
+    }
+
+    isPhysical()
+    {
+        return this.inn === this.uid
     }
 
 }
