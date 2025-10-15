@@ -6,7 +6,8 @@ import {
 } from "./common";
 
 import {
-    IEimzo
+    IEimzo,
+    EimzoErrorCodes,
 } from './eimzo'
 
 import {
@@ -23,6 +24,7 @@ export {
 
     // Eimzo
     IEimzo,
+    EimzoErrorCodes,
 
     // Certificate
     Certificate

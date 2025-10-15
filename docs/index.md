@@ -32,12 +32,23 @@ Now you can use this object for interaction.
 ## API
 
 ### Eimzo
-#### Свойства 
+#### Properties 
 > eimzo.certificates: PfxCertificate[]
-#### Добавить API ключи
+#### Add API keys
 > eimzo.addApiKey(domain: string, key: string): void
-#### Загрузить список PFX сертификатов
+#### Load the list of PFX certificates
 > eimzo.loadPfxCertificates(): Promise<PfxCertificate[]>
 
-### Подробнее о [PfxCertificate](./pfxCertificate.md)
+### More about [PfxCertificate](./pfxCertificate.md)
 
+
+## Interfaces
+### IEimzo
+The `IEimzo` interface defines a contract for interacting with the Eimzo system, combining functionality for managing API keys and loading PFX certificates. It extends the `HasApiKeys` and `HasPfxPlugin` interfaces and includes error codes defined in the `EimzoErrorCodes` enum.
+
+You can find out more here [IEimzo](./interfaces/IEimzo.md)
+
+### PfxCertificate
+The Certificate namespace defines interfaces for working with certificates, including their details and operational methods. It includes the Instance interface, which extends the Details interface, and provides methods for certificate operations such as signing and key loading.
+
+You can find out more here [Certificate](./interfaces/Certificate.md)

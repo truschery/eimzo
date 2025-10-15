@@ -1,5 +1,5 @@
 import type { StringOrUndefined, DateOrUndefined } from "./common";
-import {Pfx} from "@truschery/eimzo-api";
+import {Pfx, Pkcs7} from "@truschery/eimzo-api";
 
 
 export namespace Certificate {
@@ -8,6 +8,8 @@ export namespace Certificate {
     {
         sign: (string: string, params: any) => Promise<string>
         loadKey: () => Promise<Pfx.LoadKeyResponse>
+        isExpired: () => boolean
+        isPhysical: () => boolean
     }
 
     export interface Details

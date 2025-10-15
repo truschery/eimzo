@@ -95,35 +95,34 @@ export default class PfxCertificate implements Certificate.Instance {
 
     createPkcs7(base64: string, keyId: string, isDetached: Pkcs7.isDetached = 'no')
     {
-        return EimzoClient.pkcs7.createPkcs7(
-            base64,
-            keyId,
-            isDetached
-        ).catch(error => {
-
-            if(error.status === -5){
-                throw new EimzoError('Password Entry Canceled', EimzoErrorCodes.PASSWORD_ENTRY_CANCELED)
+        try {
+            return EimzoClient.pkcs7.createPkcs7(
+                base64,
+                keyId,
+                isDetached
+            );
+        } catch (error) {
+            //@ts-ignore
+            if (error.status === -5) {
+                throw new EimzoError('Password Entry Canceled', EimzoErrorCodes.PASSWORD_ENTRY_CANCELED);
             }
 
-            throw new EimzoError('Undefined Error creating Pkcs7', EimzoErrorCodes.UNDEFINED_ERROR)
-        })
+            throw new EimzoError('Undefined Error creating Pkcs7', EimzoErrorCodes.UNDEFINED_ERROR);
+        }
     }
 
     isExpired(): boolean
     {
         if(
-            ! isDate(this.validFrom) || 
             ! isDate(this.validTo)
         ){
             return false
         }
 
-        const difference: number = this.validTo.getTime() - new Date().getTime()
-
-        return difference <= 0
+        return this.validTo.getTime() <= new Date().getTime();
     }
 
-    isPhysical()
+    isPhysical(): boolean
     {
         return this.inn === this.uid
     }
