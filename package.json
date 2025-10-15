@@ -46,6 +46,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@truschery/eimzo-api": "^1.1.8"
+    "@truschery/eimzo-api": "^1.1.9"
   }
 }
