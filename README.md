@@ -32,6 +32,7 @@ The package has the ability to:
 - Throwing exceptions for convenient error handling 
 
 Plans:
+- Implement unit testing of modules
 - Implement a simple package configuration  
 - Add functionality for interacting with other Eimzo plugins
 
