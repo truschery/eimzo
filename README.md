@@ -21,7 +21,7 @@
   <hr />
 </div>
 
-A simple package for integration with the Eimzo API, providing the best experience for interacting with certificates, Pkcs7, and other plugins. [Eimzo](https://e-imzo.soliq.uz)
+A simple package for integration with the Eimzo API, providing the best experience for interacting with certificates, Pkcs7, and other plugins [Eimzo](https://e-imzo.soliq.uz)
 
 
 ## Features
