@@ -1,7 +1,8 @@
 import terser from "@rollup/plugin-terser";
+import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/index.js',
+    input: 'lib/index.ts',
     output: [
         {
             file: 'dist/client.min.js',
@@ -10,8 +11,8 @@ export default {
                 terser({
                     compress: {
                         drop_console: false,
-                        drop_debugger: true,
-                        pure_funcs: ['console.log'],
+                        drop_debugger: false,
+                        // pure_funcs: ['console.log'],
                         passes: 2
                     },
                     mangle: {
@@ -25,5 +26,13 @@ export default {
             ]
         }
     ],
+    plugins: [
+        typescript({
+            tsconfig: './tsconfig.json'
+        })
+    ],
+    external: [
+        '@truschery/eimzo-api'
+    ]
 
 };
