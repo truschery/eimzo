@@ -1,9 +1,8 @@
 import Config from "./Config";
 
+
 const eimzoConfig = new Config({
-    default: {
-        'timestamp': null
-    }
+
 })
 
 export default eimzoConfig

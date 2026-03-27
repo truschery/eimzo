@@ -1,57 +1,28 @@
-import {Configurable, IConfig, TConfigProperty} from './interface.js'
-import { isEmptyObject } from '../helpers/predicates'
-import {NullOrUndefined} from "../types";
+import {EimzoConfig, EimzoTimestamp} from "./interface";
+import EimzoKey from "./EimzoKey";
 
-/**
- * Основная логика класса конфигурации
- *
- * - Установка по умолчанию значений
- * - Продумать логику взаимодействия с конфигурацией
- * -
- */
 
-export default class Config implements Configurable
+export default class Config
 {
-    private defaultConfig: Map<string, any> = new Map()
-    private config: Map<string, any> = new Map()
+    keys: Record<string, string> | undefined;
+    getTimestamp: EimzoTimestamp | undefined;
 
-    constructor(configuration: IConfig)
-    {
-        this.setConfig(configuration.default)
+    constructor(config: EimzoConfig) {
+        this.setEimzoApiKeys(config)
+        this.getTimestamp = config.getTimestamp;
+
+        Object.freeze(this.keys);
+        Object.freeze(this.getTimestamp);
+        Object.freeze(this);
     }
 
-    merge(externalConfiguration: TConfigProperty): boolean
+    private setEimzoApiKeys(config: EimzoConfig)
     {
-        if(
-            ! externalConfiguration ||
-            ! isEmptyObject(externalConfiguration)
-        ) {
-            return false
-        }
+        this.keys = config.keys ?? {}
 
-        // ...
-
-        return true
-    }
-
-    get(property: string): any
-    {
-        return this.config.get(property)
-    }
-
-
-    private setConfig(configuration: NullOrUndefined|TConfigProperty)
-    {
-        if(
-            ! configuration ||
-            ! isEmptyObject(configuration)
-        ) {
-            return false
-        }
-
-        for(let key in configuration){
-            this.defaultConfig.set(key, configuration[key])
-            this.config.set(key, configuration[key])
+        if(config.debug){
+            this.keys.localhost = 'localhost'
         }
     }
+
 }

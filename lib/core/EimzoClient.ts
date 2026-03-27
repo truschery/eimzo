@@ -4,6 +4,7 @@ import ApiKeys from "./ApiKeys";
 import EimzoError from "./EimzoError";
 import {EimzoErrorCodes} from "../types/eimzo";
 
+// TODO[2603]: Возможно логику этого класса стоит вынести в eimzo-api
 class EimzoClient extends EimzoInstance
 {
     constructor() {

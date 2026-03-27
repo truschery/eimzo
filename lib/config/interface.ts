@@ -1,15 +1,13 @@
-import { List } from '../types'
+import {Callback} from "../types/common";
+import EimzoKey from "./EimzoKey";
 
-export type TConfigProperty = List
 
-export interface IConfig
+export type EimzoTimestamp = (signature_hex: string) => Promise<string>;
+
+export interface EimzoConfig
 {
-    default?: TConfigProperty
-}
+    getTimestamp?: EimzoTimestamp,
+    keys?: Record<string, string>,
+    debug?: boolean,
 
-export interface Configurable
-{
-
-    merge: (configuration: TConfigProperty) => boolean;
-    get: (property: string) => any;
 }

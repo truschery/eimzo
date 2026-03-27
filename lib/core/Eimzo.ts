@@ -5,41 +5,24 @@ import EimzoClient from './EimzoClient.js'
 import {isEmpty, isEmptyArray} from "../helpers/predicates";
 import { PfxCertificate } from "./Certificate";
 import {Pfx} from "@truschery/eimzo-api";
+import {EimzoConfig} from "../config/interface";
+import Config from "../config/Config";
+import PfxModule from "./modules/PfxModule";
+import Pkcs7Module from "./modules/Pkcs7Module";
 
 export default class Eimzo implements IEimzo
 {
-    certificates: PfxCertificate[] = []
+    private readonly config: Config;
+    pfx: PfxModule;
+    pkcs7: Pkcs7Module;
 
-    constructor()
+    constructor(config: EimzoConfig)
     {
-
+        this.config = new Config(config);
+        this.pkcs7 = new Pkcs7Module(this.config, EimzoClient)
+        this.pfx = new PfxModule(this.config, EimzoClient, this.pkcs7)
     }
 
-    addApiKey(domain: string, key: string)
-    {
-        ApiKeys.addKey(domain, key)
-    }
 
-    async loadPfxCertificates(): Promise<PfxCertificate[]>
-    {
-        const result = await EimzoClient.pfx.listAllCertificates()
-        this.certificates = this.parseCertificate(result?.certificates)
-
-        return this.certificates
-    }
-
-    private parseCertificate(certificates: Pfx.Certificate[])
-    {
-        if(
-            isEmpty(certificates) ||
-            isEmptyArray(certificates)
-        ){
-            throw new Error('[Eimzo Certificates] Certificates Is Empty')
-        }
-
-        return certificates.map(certificate => {
-            return new PfxCertificate(certificate)
-        })
-    }
 
 }

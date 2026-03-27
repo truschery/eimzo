@@ -6,29 +6,34 @@ import { Pfx } from "@truschery/eimzo-api";
 import { isBase64, isString, isDate } from "../../helpers/predicates";
 import {Pkcs7} from "@truschery/eimzo-api";
 import EimzoError from "../EimzoError";
-import {EimzoErrorCodes} from "../../types/eimzo";
+import {EimzoErrorCodes} from "../../types";
+import {CertificateFile, CertificateSignAction} from "../../types/certificate";
 
-export default class PfxCertificate implements Certificate.Instance {
+export default class PfxCertificate {
 
-    fullName: StringOrUndefined;
-    serialNumber: StringOrUndefined;
-    name: StringOrUndefined;
-    surname: StringOrUndefined;
-    inn: StringOrUndefined;
-    uid: StringOrUndefined;
-    pinfl: StringOrUndefined;
-    organization: StringOrUndefined;
-    type: StringOrUndefined;
-    validFrom: DateOrUndefined;
-    validTo: DateOrUndefined;
-    businesscategory: StringOrUndefined;
-    address: StringOrUndefined;
-    city: StringOrUndefined;
+    fullName?: string;
+    serialNumber?: string;
+    name?: string;
+    surname?: string;
+    inn?: string;
+    uid?: string;
+    pinfl?: string;
+    organization?: string;
+    type?: string;
+    validFrom?: Date;
+    validTo?: Date;
+    businesscategory?: string;
+    address?: string;
+    city?: string;
 
-    file: any;
+    file: CertificateFile;
     alias: string
 
-    constructor(certificate: Pfx.Certificate) {
+    constructor(
+        certificate: Pfx.Certificate,
+        private signAction: CertificateSignAction
+    ) {
+        const alias = new Alias(certificate.alias)
         this.alias = certificate.alias
         this.file = {
             disk: certificate.disk,
@@ -36,12 +41,6 @@ export default class PfxCertificate implements Certificate.Instance {
             path: certificate.path
         }
 
-        this.fromAlias()
-    }
-
-    fromAlias()
-    {
-        const alias = new Alias(this.alias)
         const validFrom = alias.get('validfrom') ?? new Date()
         const validTo = alias.get('validto') ?? new Date()
 
@@ -61,26 +60,12 @@ export default class PfxCertificate implements Certificate.Instance {
         this.city = alias.get('st')
     }
 
-
     async sign(
         string: string,
-        params: any
+        params?: any
     ): Promise<string>
     {
-        if(
-            isEmpty(string) ||
-            ! isString(string)
-        ){
-            throw new EimzoError('Invalid String Value Is Empty Or Not String', EimzoErrorCodes.SIGN_STRING_IS_EMPTY)
-        }
-
-        const base64 = isBase64(string) ? string : btoa(string)
-        const loadedKey = await this.loadKey()
-        const isDetached = params?.detached ? 'yes' : 'no'
-
-        const signedString = await this.createPkcs7(base64, loadedKey.keyId, isDetached)
-
-        return signedString.pkcs7_64
+        return this.signAction(this, string, params)
     }
 
     loadKey()
@@ -93,33 +78,17 @@ export default class PfxCertificate implements Certificate.Instance {
         )
     }
 
-    createPkcs7(base64: string, keyId: string, isDetached: Pkcs7.isDetached = 'no')
-    {
-        try {
-            return EimzoClient.pkcs7.createPkcs7(
-                base64,
-                keyId,
-                isDetached
-            );
-        } catch (error) {
-            //@ts-ignore
-            if (error.status === -5) {
-                throw new EimzoError('Password Entry Canceled', EimzoErrorCodes.PASSWORD_ENTRY_CANCELED);
-            }
-
-            throw new EimzoError('Undefined Error creating Pkcs7', EimzoErrorCodes.UNDEFINED_ERROR);
-        }
-    }
-
     isExpired(): boolean
     {
-        if(
-            ! isDate(this.validTo)
-        ){
-            return false
-        }
+        return ! this.isValid()
+    }
 
-        return this.validTo.getTime() <= new Date().getTime();
+    isValid(): boolean
+    {
+        if(! isDate(this.validTo)) return false
+        const now = Date.now()
+
+        return this.validTo.getTime() >= now
     }
 
     isPhysical(): boolean
