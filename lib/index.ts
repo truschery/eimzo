@@ -2,9 +2,10 @@
 import Eimzo from './core/Eimzo'
 
 export type {
-    IEimzo,
-    Certificate,
-    EimzoErrorCodes
+    EimzoTimestamp,
+    EimzoConfig,
+    EimzoErrorCodes,
+    Certificate
 } from './types'
 
 export default Eimzo
