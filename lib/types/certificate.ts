@@ -1,35 +1,22 @@
-import type { StringOrUndefined, DateOrUndefined } from "./common";
 import {Pfx, Pkcs7} from "@truschery/eimzo-api";
 
+export interface CertificateFile
+{
+    disk: string,
+    path: string,
+    name: string,
+}
 
-export namespace Certificate {
+export type CertificateSignAction = (cert: Certificate, signableContent: string, params?: any) => Promise<string>;
+export type CertificateLoadKeyAction = (disk: string, path: string, name: string, alias: string) => Promise<Pfx.LoadKeyResponse>;
 
-    export interface Instance extends Details
-    {
-        sign: (string: string, params: any) => Promise<string>
-        loadKey: () => Promise<Pfx.LoadKeyResponse>
-        isExpired: () => boolean
-        isPhysical: () => boolean
-    }
+export interface Certificate {
+    file: CertificateFile,
+    alias: string,
 
-    export interface Details
-    {
-        fullName: StringOrUndefined;
-        serialNumber: StringOrUndefined;
-        name: StringOrUndefined;
-        surname: StringOrUndefined;
-        inn: StringOrUndefined;
-        uid: StringOrUndefined;
-        pinfl: StringOrUndefined;
-        organization: StringOrUndefined;
-        type: StringOrUndefined;
-        validFrom: DateOrUndefined;
-        validTo: DateOrUndefined;
-        businesscategory: StringOrUndefined;
-        address: StringOrUndefined;
-        city: StringOrUndefined;
-    }
-
-
-
+    sign: (string: string, params: any) => Promise<string>
+    loadKey: () => Promise<Pfx.LoadKeyResponse> // TODO[2703]: Сделать интерфейс абстрактнымм
+    isExpired: () => boolean
+    isValid: () => boolean
+    isPhysical: () => boolean
 }
