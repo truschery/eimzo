@@ -1,13 +1,13 @@
 import EimzoClient from "@truschery/eimzo-api";
-import {EimzoErrorCodes, IEimzo} from '../types'
-import {EimzoConfig} from "../config/interface";
+import {EimzoErrorCodes} from '../types'
+import {EimzoConfig} from "../types";
 import Config from "../config";
 import PfxModule from "./modules/PfxModule";
 import Pkcs7Module from "./modules/Pkcs7Module";
 import EimzoError from "./EimzoError";
-import {EimzoVersion} from "../types/eimzo";
+import {EimzoVersion} from "../types";
 
-export default class Eimzo implements IEimzo
+export default class Eimzo
 {
     private readonly config: Config;
     private readonly client: EimzoClient;

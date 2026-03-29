@@ -1,4 +1,4 @@
-import {EimzoConfig, EimzoTimestamp} from "./interface";
+import {EimzoConfig, EimzoTimestamp} from "../types";
 
 
 export default class Config

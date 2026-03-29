@@ -1,12 +1,8 @@
-import {
-    List,
-    NullOrUndefined,
-    DateOrUndefined,
-    StringOrUndefined
-} from "./common";
 
 import {
-    IEimzo,
+    EimzoConfig,
+    EimzoTimestamp,
+    EimzoVersion,
     EimzoErrorCodes,
 } from './eimzo'
 
@@ -19,15 +15,13 @@ import {
 
 
 export {
-    // Common
-    List,
-    NullOrUndefined,
-    DateOrUndefined,
-    StringOrUndefined,
+
 
     // Eimzo
-    IEimzo,
+    EimzoVersion,
     EimzoErrorCodes,
+    EimzoConfig,
+    EimzoTimestamp,
 
     // Certificate
     Certificate,
