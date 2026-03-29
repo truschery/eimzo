@@ -1,54 +1,52 @@
-# Documentation @truschery/eimzo
+# Documentation | @truschery/eimzo
 
-A simple package for integration with the Eimzo API, providing the best experience for interacting with certificates, Pkcs7, and other plugins [Eimzo](https://e-imzo.soliq.uz)
-
+Welcome to the official documentation for the `@truschery/eimzo` SDK. This package provides the best Developer Experience for interacting with the [E-IMZO](https://e-imzo.soliq.uz) application.
 
 ## Contents
 - [Installation](#installation)
-- [API](#api)
-- [Interfaces](#interfaces)
+- [Configuration (EimzoOptions)](#configuration)
+- [Modules Overview](#modules-overview)
 
 ## Installation
 
-Install the package via npm:
-```js
+Install the package using your favorite package manager:
+
+```bash
 npm install @truschery/eimzo
+# or
+yarn add @truschery/eimzo
+# or
+pnpm add @truschery/eimzo
 ```
 
-To use `@truschery/eimzo`, import the package and initialize it with your Eimzo API credentials.
+## Configuration
+To use the SDK, you must import the Eimzo class and initialize it with your configuration object.
+```typescript
+import { Eimzo, EimzoOptions } from '@truschery/eimzo';
+
+const options: EimzoOptions = {
+  // OPTIONAL
+  apiKeys: {
+    // INFO: Localhost is the default
+    'example.com': 'my_token...'
+  },
+  
+  // OPTIONAL
+  getTimestamp: async (signatureHash) => {
+    // Custom logic to fetch timestamp from your backend
+    return 'timestamp_base64_string';
+  }
+};
+
+const eimzo = new Eimzo(options);
 ```
-import Eimzo from '@truschery/eimzo'
 
-// Initialize with API key
-const eimzo = new Eimzo({
-  // ...configuration...
-})
-
-// You need to add API keys
-eimzo.addApiKey('your-site', 'api-key')
-```
-Now you can use this object for interaction.
-
-## API
-
-### Eimzo
-#### Properties 
-> eimzo.certificates: PfxCertificate[]
-#### Add API keys
-> eimzo.addApiKey(domain: string, key: string): void
-#### Load the list of PFX certificates
-> eimzo.loadPfxCertificates(): Promise<PfxCertificate[]>
-
-### More about [PfxCertificate](./pfxCertificate.md)
+## Modules Overview
+The SDK is divided into logical modules. Choose a section to read more:
+- **[Eimzo Client (Core)](./client.md)** — Main entry point, Health Checks, and Agent version. It seamlessly uses 
+the `@truschery/eimzo-api` package under the hood as the transport client.
+- **[PFX Module](./pfx.md)** — Listing and smart filtering of certificates.
+- **[Certificate Class](./certificate.md)** — Certificate details and signing methods.
+- **[PKCS7 Module](./pkcs7.md)** — Parsing and reading signature information.
 
 
-## Interfaces
-### IEimzo
-The `IEimzo` interface defines a contract for interacting with the Eimzo system, combining functionality for managing API keys and loading PFX certificates. It extends the `HasApiKeys` and `HasPfxPlugin` interfaces and includes error codes defined in the `EimzoErrorCodes` enum.
-
-You can find out more here [IEimzo](./interfaces/IEimzo.md)
-
-### PfxCertificate
-The Certificate namespace defines interfaces for working with certificates, including their details and operational methods. It includes the Instance interface, which extends the Details interface, and provides methods for certificate operations such as signing and key loading.
-
-You can find out more here [Certificate](./interfaces/Certificate.md)

@@ -1,7 +1,13 @@
-import { PfxCertificate } from "../core/Certificate";
-import PfxModule from "../core/modules/PfxModule";
 
-export interface EimzoClient {
+
+
+export type EimzoTimestamp = (signature_hex: string) => Promise<string>;
+
+export interface EimzoConfig
+{
+    getTimestamp?: EimzoTimestamp,
+    keys?: Record<string, string>,
+    debug?: boolean,
 
 }
 
@@ -21,11 +27,4 @@ export enum EimzoErrorCodes {
     PASSWORD_ENTRY_CANCELED,
     SIGN_STRING_IS_EMPTY,
     TIMESTAMP_FAIL
-    
-
-}
-
-export interface IEimzo
-{
-    pfx: PfxModule;
 }

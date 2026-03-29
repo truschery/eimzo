@@ -1,7 +1,8 @@
 # Eimzo
 
 <div align="center">
-  <h1>Eimzo</h1>
+  <h1>E-IMZO SDK</h1>
+  <p><b>Modern, Promise-based, and strictly typed SDK for E-IMZO</b></p>
   <a href="https://www.npmjs.org/package/@truschery/eimzo"><img src="https://img.shields.io/npm/v/@truschery/eimzo?style=flat-square" /></a>
   <a href="https://packagephobia.com/result?p=@truschery/eimzo"><img src="https://packagephobia.com/badge?p=@truschery/eimzo" /></a>
   <a href="https://bundlephobia.com/package/@truschery/eimzo@latest"><img src="https://img.shields.io/bundlephobia/minzip/@truschery/eimzo?style=flat-square" /></a>
@@ -21,26 +22,28 @@
   <hr />
 </div>
 
-A simple package for integration with the Eimzo API, providing the best experience for interacting with certificates, Pkcs7, and other plugins [Eimzo](https://e-imzo.soliq.uz)
-
+`@truschery/eimzo` is a lightweight wrapper that provides the best Developer Experience for interacting with E-IMZO certificates, PKCS#7 signatures, and smart filtering
 
 ## Features
-The package has the ability to:
-- Sending and processing API requests to Eimzo
-- Connecting Eimzo API keys and checking the Eimzo application version
-- Interaction with certificates implemented
-- Throwing exceptions for convenient error handling 
+- **Modern API:** Fully Promise-based (`async/await`). No more nested callbacks
+- **First-class TypeScript:** Excellent IDE autocompletion for certificate properties and methods
+- **Smart Filtering:** Find certificates by INN, PINFL, or validity status out of the box
+- **Clean Architecture:** Immutable configuration and separated transport layer (`eimzo-api`)
 
-Plans:
-- Implement unit testing of modules
-- Implement a simple package configuration  
-- Add functionality for interacting with other Eimzo plugins
+## Plans:
+- **Tests**: Implement unit testing of modules
+- **Config**: Implement a simple package configuration  
+- **Plugins**: Add functionality for interacting with other Eimzo plugins
 
 ## Installation
 Install the package via npm:
 
 ```bash
 npm install @truschery/eimzo
+# or
+yarn add @truschery/eimzo
+# or
+pnpm add @truschery/eimzo
 ```
 
 ## Documentation
@@ -48,22 +51,23 @@ To view the complete documentation for the package, you can visit [Docs](docs/in
 
 Ensure you have Node.js version 14 or higher installed.
 
-## Example
-To use `@truschery/eimzo`, import the package and initialize it with your Eimzo API credentials.
+## Quick Start
+To use `@truschery/eimzo`, Initialize the facade once and enjoy the magic:
 
-```javascript
+```typescript
 import Eimzo from '@truschery/eimzo'
 
 // Initialize with API key
 const eimzo = new Eimzo({
-  // ...configuration...
+  keys: {
+      'example.com': 'my-token...'
+  }
 })
 
-// You need to add API keys
-eimzo.addApiKey('your-site', 'api-key')
-
 // Get a list of certificates
-const certificates = await eimzo.loadPfxCertificates()
+const certificates = await eimzo.pfx.list({
+    /** filter options */
+})
 
 // Interaction with the certificate
 const certificate = certificates[0]

@@ -1,6 +1,6 @@
 {
   "name": "@truschery/eimzo",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A lightweight Node.js package for seamless integration with Eimzo, providing easy-to-use functionality for creating digital signatures and managing API keys.",
   "author": {
     "name": "truschery",
