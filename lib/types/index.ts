@@ -11,7 +11,10 @@ import {
 } from './eimzo'
 
 import {
-    Certificate
+    Certificate,
+    CertificateFile,
+    CertificateLoadKeyAction,
+    CertificateSignAction,
 } from './certificate'
 
 
@@ -27,5 +30,8 @@ export {
     EimzoErrorCodes,
 
     // Certificate
-    Certificate
+    Certificate,
+    CertificateFile,
+    CertificateLoadKeyAction,
+    CertificateSignAction
 }

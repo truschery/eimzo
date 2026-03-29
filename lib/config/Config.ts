@@ -1,57 +1,40 @@
-import {Configurable, IConfig, TConfigProperty} from './interface.js'
-import { isEmptyObject } from '../helpers/predicates'
-import {NullOrUndefined} from "../types";
+import {EimzoConfig, EimzoTimestamp} from "./interface";
 
-/**
- * Основная логика класса конфигурации
- *
- * - Установка по умолчанию значений
- * - Продумать логику взаимодействия с конфигурацией
- * -
- */
 
-export default class Config implements Configurable
+export default class Config
 {
-    private defaultConfig: Map<string, any> = new Map()
-    private config: Map<string, any> = new Map()
+    keys: Record<string, string> | undefined;
+    getTimestamp: EimzoTimestamp | undefined;
 
-    constructor(configuration: IConfig)
-    {
-        this.setConfig(configuration.default)
+    constructor(config: EimzoConfig) {
+        this.setEimzoApiKeys(config)
+        this.getTimestamp = config.getTimestamp;
+
+        Object.freeze(this.keys);
+        Object.freeze(this.getTimestamp);
+        Object.freeze(this);
     }
 
-    merge(externalConfiguration: TConfigProperty): boolean
+    getKeys()
     {
-        if(
-            ! externalConfiguration ||
-            ! isEmptyObject(externalConfiguration)
-        ) {
-            return false
+        const keys = []
+
+        for(let key in this.keys)
+        {
+            keys.push(key)
+            keys.push(this.keys[key])
         }
 
-        // ...
-
-        return true
+        return keys
     }
 
-    get(property: string): any
+    private setEimzoApiKeys(config: EimzoConfig)
     {
-        return this.config.get(property)
-    }
+        this.keys = config.keys ?? {}
 
-
-    private setConfig(configuration: NullOrUndefined|TConfigProperty)
-    {
-        if(
-            ! configuration ||
-            ! isEmptyObject(configuration)
-        ) {
-            return false
-        }
-
-        for(let key in configuration){
-            this.defaultConfig.set(key, configuration[key])
-            this.config.set(key, configuration[key])
+        if(config.debug){
+            this.keys.localhost = 'localhost'
         }
     }
+
 }

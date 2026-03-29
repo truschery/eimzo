@@ -1,13 +1,14 @@
 import { PfxCertificate } from "../core/Certificate";
+import PfxModule from "../core/modules/PfxModule";
 
-export interface HasApiKeys
-{
-    addApiKey: (domain: string, key: string) => void
+export interface EimzoClient {
+
 }
 
-export interface HasPfxPlugin 
-{
-    loadPfxCertificates: () => Promise<PfxCertificate[]>;
+export interface EimzoVersion {
+    major: number,
+    minor: number,
+    full: string,
 }
 
 export enum EimzoErrorCodes {
@@ -18,12 +19,13 @@ export enum EimzoErrorCodes {
 
     //PKCS7
     PASSWORD_ENTRY_CANCELED,
-    SIGN_STRING_IS_EMPTY
+    SIGN_STRING_IS_EMPTY,
+    TIMESTAMP_FAIL
     
 
 }
 
-export interface IEimzo extends HasApiKeys, HasPfxPlugin
+export interface IEimzo
 {
-
+    pfx: PfxModule;
 }
