@@ -1,10 +1,9 @@
 import Module from "./Module";
 import {PfxCertificate} from "../Certificate";
-import {Pfx} from "@truschery/eimzo-api";
+import EimzoClient, {Pfx} from "@truschery/eimzo-api";
 import {isEmpty, isEmptyArray} from "../../helpers/predicates";
 import Pkcs7Module from "./Pkcs7Module";
-import Config from "../../config/Config";
-import EimzoClient from "../EimzoClient";
+import Config from "../../config";
 import {Certificate} from "../../types";
 import {PfxListOptions} from "./types";
 import filterCertificates from "../../helpers/filterCertificates";
@@ -13,7 +12,7 @@ export default class PfxModule extends Module
 {
     constructor(
         config: Config,
-        client: typeof EimzoClient,
+        client: EimzoClient,
         private pkcs7: Pkcs7Module
     ) {
         super(config, client);
@@ -45,7 +44,13 @@ export default class PfxModule extends Module
         return certificates.map(certificate => {
             return new PfxCertificate(
                 certificate,
-                (cert: Certificate, signableContent: string, params?: any) => this.pkcs7.sign(cert, signableContent, params)
+                (cert: Certificate, signableContent: string, params?: any) => this.pkcs7.sign(cert, signableContent, params),
+                (disk: string, path: string, name: string, alias: string) => this.client.pfx.loadKey(
+                    disk,
+                    path,
+                    name,
+                    alias
+                )
             )
         })
     }

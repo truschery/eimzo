@@ -1,6 +1,3 @@
-import {Callback} from "../types/common";
-import EimzoKey from "./EimzoKey";
-
 
 export type EimzoTimestamp = (signature_hex: string) => Promise<string>;
 

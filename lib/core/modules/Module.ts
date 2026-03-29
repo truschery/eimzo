@@ -1,15 +1,15 @@
-import EimzoClient from "../EimzoClient";
-import Config from "../../config/Config";
+import EimzoClient from "@truschery/eimzo-api";
+import Config from "../../config";
 
 
 export default class Module
 {
     config: Config;
-    client: typeof EimzoClient;
+    client: EimzoClient;
 
     constructor(
       config: Config,
-      client: typeof EimzoClient, // TODO[2603] Использовать объект от eimzo-api
+      client: EimzoClient, // TODO[2603] Использовать объект от eimzo-api
     ) {
         this.config = config;
         this.client = client

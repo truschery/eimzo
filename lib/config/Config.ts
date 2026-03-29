@@ -1,5 +1,4 @@
 import {EimzoConfig, EimzoTimestamp} from "./interface";
-import EimzoKey from "./EimzoKey";
 
 
 export default class Config
@@ -14,6 +13,19 @@ export default class Config
         Object.freeze(this.keys);
         Object.freeze(this.getTimestamp);
         Object.freeze(this);
+    }
+
+    getKeys()
+    {
+        const keys = []
+
+        for(let key in this.keys)
+        {
+            keys.push(key)
+            keys.push(this.keys[key])
+        }
+
+        return keys
     }
 
     private setEimzoApiKeys(config: EimzoConfig)

@@ -27,7 +27,7 @@ export default class Pkcs7Module extends Module
 
         if(this.config.getTimestamp){
             try{
-                return await this.config.getTimestamp(signedString.pkcs7_64);
+                return await this.config.getTimestamp(signedString.signature_hex);
             }catch(e){
                 throw new EimzoError('An error occurred while generating the timestamp.', EimzoErrorCodes.TIMESTAMP_FAIL)
             }

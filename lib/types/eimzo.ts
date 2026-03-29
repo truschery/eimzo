@@ -5,6 +5,12 @@ export interface EimzoClient {
 
 }
 
+export interface EimzoVersion {
+    major: number,
+    minor: number,
+    full: string,
+}
+
 export enum EimzoErrorCodes {
     UNDEFINED_ERROR,
 

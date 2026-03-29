@@ -1,4 +1,3 @@
-import type { StringOrUndefined, DateOrUndefined } from "./common";
 import {Pfx, Pkcs7} from "@truschery/eimzo-api";
 
 export interface CertificateFile
@@ -9,6 +8,7 @@ export interface CertificateFile
 }
 
 export type CertificateSignAction = (cert: Certificate, signableContent: string, params?: any) => Promise<string>;
+export type CertificateLoadKeyAction = (disk: string, path: string, name: string, alias: string) => Promise<Pfx.LoadKeyResponse>;
 
 export interface Certificate {
     file: CertificateFile,

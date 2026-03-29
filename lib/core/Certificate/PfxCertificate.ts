@@ -1,13 +1,7 @@
-import {Certificate, DateOrUndefined, StringOrUndefined} from "../../types";
-import {isEmpty, isEmptyObjectProperties} from "../../helpers/predicates";
-import Alias from "./Alias";
-import EimzoClient from "../EimzoClient";
 import { Pfx } from "@truschery/eimzo-api";
-import { isBase64, isString, isDate } from "../../helpers/predicates";
-import {Pkcs7} from "@truschery/eimzo-api";
-import EimzoError from "../EimzoError";
-import {EimzoErrorCodes} from "../../types";
-import {CertificateFile, CertificateSignAction} from "../../types/certificate";
+import Alias from "./Alias";
+import { isDate } from "../../helpers/predicates";
+import {CertificateFile, CertificateLoadKeyAction, CertificateSignAction} from "../../types";
 
 export default class PfxCertificate {
 
@@ -31,7 +25,8 @@ export default class PfxCertificate {
 
     constructor(
         certificate: Pfx.Certificate,
-        private signAction: CertificateSignAction
+        private signAction: CertificateSignAction,
+        private loadKeyAction: CertificateLoadKeyAction
     ) {
         const alias = new Alias(certificate.alias)
         this.alias = certificate.alias
@@ -70,7 +65,7 @@ export default class PfxCertificate {
 
     loadKey()
     {
-        return EimzoClient.pfx.loadKey(
+        return this.loadKeyAction(
             this.file.disk,
             this.file.path,
             this.file.name,
